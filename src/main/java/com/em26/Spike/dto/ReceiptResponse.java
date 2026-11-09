@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public record ReceiptResponse(
         Long id,
-        BigDecimal totalAmount
+        BigDecimal totalAmount,
+        String shopName
 ) {
 }

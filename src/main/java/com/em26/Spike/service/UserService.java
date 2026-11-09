@@ -19,4 +19,10 @@ public class UserService {
         User user = userMapper.toEntity(request);
         return userMapper.toResponse(userRepository.save(user));
     }
+
+    public UserResponse findById(Long id) {
+        User user =  userRepository.findById(id).orElseThrow(() ->
+                new RuntimeException("User not found: " + id));
+        return userMapper.toResponse(user);
+    }
 }

@@ -3,6 +3,7 @@ package com.em26.Spike.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,5 +18,5 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Receipt> receipts;
+    private List<Receipt> receipts = new ArrayList<>();
 }

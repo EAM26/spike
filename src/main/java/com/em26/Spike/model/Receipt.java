@@ -17,7 +17,7 @@ public class Receipt {
 
     private String storageLocation;
     private LocalDateTime receiptDateTime;
-    private BigDecimal totalAmount;
+    private BigDecimal totalPrice;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
