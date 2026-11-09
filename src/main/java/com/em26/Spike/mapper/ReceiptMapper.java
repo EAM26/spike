@@ -12,16 +12,18 @@ public class ReceiptMapper {
     public ReceiptResponse toResponse(Receipt receipt) {
         return new ReceiptResponse(
                 receipt.getId(),
+                receipt.getSerialNumber(),
                 receipt.getTotalPrice(),
-                receipt.getShop().getName()
+                receipt.getShop().getName(),
+                receipt.getStorageLocation()
         );
     }
 
     public Receipt toEntity(ReceiptRequest request, Shop shop) {
         Receipt receipt = new Receipt();
         receipt.setShop(shop);
-        receipt.setStorageLocation(request.storageLocation());
         receipt.setTotalPrice(request.totalPrice());
+        receipt.setSerialNumber(request.serialNumber());
         return receipt;
     }
 }
