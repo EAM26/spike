@@ -26,14 +26,28 @@ public class ReceiptService {
     private final ReceiptMapper receiptMapper;
     private final ReceiptRepository receiptRepository;
     private final UserRepository userRepository;
+    private final UrlBuilder urlBuilder;
 
-    public ReceiptResponse createReceipt(ReceiptRequest request, MultipartFile document, Long shopId) {
+//    todo: this wil be the start of creating  claim with qrcode endpoint and login flow
+//    public String createReceipt(ReceiptRequest request, MultipartFile document, Long shopId) {
+//        Shop shop = getShop(shopId);
+//        Receipt receipt = receiptMapper.toEntity(request, shop);
+//        String storageLocation = storeDocument(document, shop.getName(), receipt.getSerialNumber());
+//        receipt.setStorageLocation(storageLocation);
+//        receiptRepository.save(receipt);
+//        return urlBuilder.createClaimUrl(receipt.getId());
+//    }
+
+    public String createReceipt(ReceiptRequest request, MultipartFile document, Long shopId) {
         Shop shop = getShop(shopId);
         Receipt receipt = receiptMapper.toEntity(request, shop);
         String storageLocation = storeDocument(document, shop.getName(), receipt.getSerialNumber());
         receipt.setStorageLocation(storageLocation);
+        receiptRepository.save(receipt);
 
-        return receiptMapper.toResponse(receiptRepository.save(receipt));
+//        Shortcut to claim with fake userId
+        claimReceipt(1L, receipt.getId());
+        return "receipt claimed";
     }
 
     private String storeDocument(MultipartFile document, String shopName, Long serialNumber) {

@@ -1,7 +1,6 @@
 package com.em26.Spike.controller;
 
 import com.em26.Spike.dto.ReceiptRequest;
-import com.em26.Spike.dto.ReceiptResponse;
 import com.em26.Spike.dto.ShopRequest;
 import com.em26.Spike.dto.ShopResponse;
 import com.em26.Spike.service.ReceiptService;
@@ -27,8 +26,9 @@ public class ShopController {
     }
 
     @PostMapping(path = "{id}/receipt", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<ReceiptResponse> createReceipt(@PathVariable Long id, @RequestPart ReceiptRequest request,
+    public ResponseEntity<String> createReceipt(@PathVariable Long id, @RequestPart ReceiptRequest request,
                                                          @RequestPart MultipartFile document) {
+
         return ResponseEntity.status(HttpStatus.CREATED).body(receiptService.createReceipt(request, document, id));
 
     }
