@@ -6,7 +6,9 @@ import com.em26.Spike.mapper.ShopMapper;
 import com.em26.Spike.model.Shop;
 import com.em26.Spike.repository.ShopRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class ShopService {
 
     public ShopResponse findById(Long id) {
         Shop shop =  shopRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("Shop not found: " + id));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Shop not found: " + id));
         return shopMapper.toResponse(shop);
     }
 }

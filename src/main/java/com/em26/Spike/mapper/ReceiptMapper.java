@@ -10,12 +10,17 @@ import org.springframework.stereotype.Component;
 public class ReceiptMapper {
 
     public ReceiptResponse toResponse(Receipt receipt) {
+        Long userId = null;
+        if(receipt.getUser() != null) {
+            userId = receipt.getUser().getId();
+        }
         return new ReceiptResponse(
                 receipt.getId(),
                 receipt.getSerialNumber(),
                 receipt.getTotalPrice(),
                 receipt.getShop().getName(),
-                receipt.getStorageLocation()
+                receipt.getStorageLocation(),
+                userId
         );
     }
 

@@ -6,7 +6,9 @@ import com.em26.Spike.mapper.UserMapper;
 import com.em26.Spike.model.User;
 import com.em26.Spike.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class UserService {
 
     public UserResponse findById(Long id) {
         User user =  userRepository.findById(id).orElseThrow(() ->
-                new RuntimeException("User not found: " + id));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + id));
         return userMapper.toResponse(user);
     }
 }

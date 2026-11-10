@@ -7,6 +7,7 @@ public record ReceiptResponse(
         Long serialNumber,
         BigDecimal totalAmount,
         String shopName,
-        String storageLocation
+        String storageLocation,
+        Long userId
 ) {
 }
