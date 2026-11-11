@@ -15,6 +15,7 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long serialNumber;
     private String storageLocation;
     private LocalDateTime receiptDateTime;
     private BigDecimal totalPrice;

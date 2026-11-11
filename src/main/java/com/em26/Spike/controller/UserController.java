@@ -1,10 +1,13 @@
 package com.em26.Spike.controller;
 
+import com.em26.Spike.dto.ReceiptResponse;
 import com.em26.Spike.dto.UserRequest;
 import com.em26.Spike.dto.UserResponse;
+import com.em26.Spike.service.ReceiptService;
 import com.em26.Spike.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final ReceiptService receiptService;
 
     @GetMapping
     public String ping() {
@@ -28,5 +32,26 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.findById(id));
+    }
+
+//    @PostMapping("/{userId}/claim/{receiptId}")
+//    public String claimReceipt(@PathVariable Long userId, @PathVariable Long receiptId) {
+//        return receiptService.claimReceipt(userId, receiptId);
+//    }
+
+    @PostMapping("/{userId}/claim/{receiptId}")
+    public ResponseEntity<ReceiptResponse> claimReceipt(@PathVariable Long userId, @PathVariable Long receiptId) {
+        return ResponseEntity.ok(receiptService.claimReceipt(userId, receiptId));
+    }
+
+    @GetMapping(path = "/i-want-your-user-id/claim/{receiptId}",
+            produces = MediaType.TEXT_HTML_VALUE)
+    public ResponseEntity<String> showClaimForm(@PathVariable Long receiptId) {
+        String html = """
+                  <form method="post" action="/api/users/1/claim/%d">
+                  <button type="submit">Claim bon</button>
+                </form>
+                """.formatted(receiptId);
+        return ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(html);
     }
 }
