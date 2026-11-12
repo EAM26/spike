@@ -2,6 +2,7 @@ package com.em26.Spike.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,9 +22,12 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     private String email;
+
+    @ToString.Exclude
     private String password;
     private String role;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Receipt> receipts = new ArrayList<>();
 
