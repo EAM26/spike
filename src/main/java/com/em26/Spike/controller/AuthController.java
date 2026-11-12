@@ -1,6 +1,7 @@
 package com.em26.Spike.controller;
 
 import com.em26.Spike.dto.AuthRequest;
+import com.em26.Spike.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
+    private final JWTUtil jwtUtil;
 
     @PostMapping
     public String generateToken(@RequestBody AuthRequest request) {
@@ -22,7 +24,8 @@ public class AuthController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.username(), request.password())
             );
-            return "jwt";
+            return jwtUtil.generateToken(request.username());
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
