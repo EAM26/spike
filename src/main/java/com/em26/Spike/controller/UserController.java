@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
     private final ReceiptService receiptService;
 
-    @GetMapping
+    @GetMapping("/ping")
     public String ping() {
         return "PING";
     }
@@ -34,10 +34,6 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-//    @PostMapping("/{userId}/claim/{receiptId}")
-//    public String claimReceipt(@PathVariable Long userId, @PathVariable Long receiptId) {
-//        return receiptService.claimReceipt(userId, receiptId);
-//    }
 
     @PostMapping("/{userId}/claim/{receiptId}")
     public ResponseEntity<ReceiptResponse> claimReceipt(@PathVariable Long userId, @PathVariable Long receiptId) {
