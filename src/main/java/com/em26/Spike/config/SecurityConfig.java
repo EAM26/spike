@@ -1,5 +1,7 @@
 package com.em26.Spike.config;
 
+import com.em26.Spike.filter.JwtAuthFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -12,14 +14,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Component
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtAuthFilter JwtAuthFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) {
@@ -28,8 +31,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/authenticate", "/h2-console/**", "/error").permitAll()
                         .anyRequest().authenticated())
-                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-               .httpBasic(withDefaults());
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+//               .httpBasic(withDefaults()); // This is for Basic Auth only
+        http.addFilterBefore(JwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

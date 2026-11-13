@@ -2,6 +2,8 @@ package com.em26.Spike.dto;
 
 public record UserRequest(
         String username,
-        String email
+        String email,
+        String password,
+        String role
 ) {
 }

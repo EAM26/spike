@@ -7,6 +7,7 @@ import com.em26.Spike.model.User;
 import com.em26.Spike.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,9 +17,11 @@ public class UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserRequest request) {
         User user = userMapper.toEntity(request);
+        user.setPassword(passwordEncoder.encode(request.password()));
         return userMapper.toResponse(userRepository.save(user));
     }
 

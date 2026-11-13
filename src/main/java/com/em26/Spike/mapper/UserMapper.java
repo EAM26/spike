@@ -20,8 +20,8 @@ public class UserMapper {
         User user = new User();
         user.setUsername(request.username());
         user.setEmail(request.email());
+        user.setRole(request.role());
         user.setReceipts(new ArrayList<>());
-
         return user;
     }
 
@@ -35,6 +35,7 @@ public class UserMapper {
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
+                user.getRole(),
                 receipts
 
         );
