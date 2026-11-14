@@ -82,7 +82,6 @@ public class ReceiptService {
         }
         receipt.setUser(currentUser);
         return receiptMapper.toResponse(receiptRepository.save(receipt));
-
     }
 
     private Receipt getReceipt(Long receiptId) {
@@ -90,8 +89,5 @@ public class ReceiptService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Receipt not found: " + receiptId));
     }
 
-    private User getUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + userId));
-    }
+
 }
