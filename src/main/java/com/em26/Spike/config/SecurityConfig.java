@@ -3,6 +3,7 @@ package com.em26.Spike.config;
 import com.em26.Spike.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -30,6 +31,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/authenticate", "/h2-console/**", "/error").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/claim-receipt/{receiptId}").permitAll()
                         .anyRequest().authenticated())
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 //               .httpBasic(withDefaults()); // This is for Basic Auth only
