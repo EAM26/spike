@@ -1,6 +1,6 @@
 package com.em26.Spike.dto;
 
-public record AuthRequest(
+public record AuthenticationRequest(
         String username,
         String password
 ) {
